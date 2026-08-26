@@ -1,310 +1,505 @@
 <!DOCTYPE html>
-<html lang="en" class="scroll-smooth">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Eash Sultan — Portfolio</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Eash Sultan | AI Engineer & Full-Stack Developer</title>
+    <meta name="description" content="Premium interactive portfolio of Eash Sultan. AI engineer, entrepreneur, and full-stack software developer building scalable digital solutions.">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
     <style>
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            background-color: #0b0f19;
+        /* Loading Screen styling to match original site vibes */
+        #loader {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #070a13;
+            transition: opacity 0.8s ease;
         }
-        /* Custom scrollbar */
-        ::-webkit-scrollbar {
-            width: 8px;
-        }
-        ::-webkit-scrollbar-track {
-            background: #0b0f19;
-        }
-        ::-webkit-scrollbar-thumb {
-            background: #1e293b;
+        .loader-bar-container {
+            width: 260px;
+            height: 2px;
+            background: rgba(255,255,255,0.05);
             border-radius: 4px;
+            margin: 1.5rem auto;
+            overflow: hidden;
         }
-        ::-webkit-scrollbar-thumb:hover {
-            background: #3b82f6;
+        #loader-bar {
+            width: 0%;
+            height: 100%;
+            background: var(--gradient);
+            transition: width 0.1s ease;
         }
-        .glass {
-            background: rgba(17, 24, 39, 0.7);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid rgba(255, 255, 255, 0.05);
+        #loader-text {
+            font-size: 0.75rem;
+            letter-spacing: 0.25em;
+            color: var(--text-muted);
+            text-transform: uppercase;
         }
     </style>
 </head>
-<body class="text-slate-100 overflow-x-hidden">
+<body class="theme-cyan">
 
     <!-- Loading Screen -->
-    <div id="loader" class="fixed inset-0 z-50 flex flex-col items-center justify-center bg-[#070a13] transition-opacity duration-700">
-        <div class="text-center">
-            <h1 class="text-3xl font-extrabold tracking-widest text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-500 mb-6">
-                EASH SULTAN
-            </h1>
-            <div class="w-64 h-1.5 bg-slate-800 rounded-full overflow-hidden mx-auto mb-3">
-                <div id="loader-bar" class="w-0 h-full bg-gradient-to-r from-blue-500 to-indigo-600 transition-all duration-100"></div>
+    <div id="loader">
+        <div style="text-align: center;">
+            <h1 class="gradient-text" style="font-family: 'Space Grotesk', sans-serif; font-weight: 800; font-size: 2.2rem; letter-spacing: 0.1em; margin: 0;">EASH SULTAN</h1>
+            <div class="loader-bar-container">
+                <div id="loader-bar"></div>
             </div>
-            <p id="loader-text" class="text-sm font-medium tracking-wider text-slate-400">LOADING EXPERIENCE 0%</p>
+            <p id="loader-text">Initializing Systems 0%</p>
         </div>
     </div>
 
-    <!-- Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-40 px-6 py-4 transition-all duration-300">
-        <div class="max-w-7xl mx-auto flex items-center justify-between glass px-6 py-3 rounded-full shadow-lg">
-            <a href="#" class="text-xl font-bold tracking-wider text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">
-                ES
-            </a>
-            <div class="hidden md:flex items-center space-x-8 text-sm font-medium tracking-wide text-slate-300">
-                <a href="#hero-container" class="hover:text-blue-400 transition-colors">Home</a>
-                <a href="#about" class="hover:text-blue-400 transition-colors">About</a>
-                <a href="#projects" class="hover:text-blue-400 transition-colors">Projects</a>
-                <a href="#skills" class="hover:text-blue-400 transition-colors">Skills</a>
-                <a href="#contact" class="hover:text-blue-400 transition-colors">Contact</a>
-            </div>
-            <a href="#contact" class="px-5 py-2 rounded-full text-xs font-semibold uppercase tracking-wider bg-blue-600 hover:bg-blue-700 text-white transition-all shadow-md shadow-blue-900/30">
-                Hire Me
-            </a>
-        </div>
-    </nav>
+    <!-- Custom Glowing Cursor -->
+    <div class="custom-cursor"></div>
+    <div class="custom-cursor-dot"></div>
 
-    <!-- Scroll Motion Hero Container -->
-    <div id="hero-container" class="relative w-full h-[500vh] bg-[#070a13]">
-        <!-- Sticky viewport wrapper for Canvas -->
-        <div class="sticky top-0 left-0 w-full h-screen overflow-hidden">
-            <canvas id="motion-canvas" class="absolute inset-0 w-full h-full object-cover"></canvas>
-            
-            <!-- Dark Vignette Overlay -->
-            <div class="absolute inset-0 bg-gradient-to-t from-[#0b0f19] via-transparent to-[#070a13]/80 pointer-events-none"></div>
+    <!-- Canvas for Particle Background -->
+    <canvas id="particle-canvas"></canvas>
 
-            <!-- Slide 1: Eash Sultan Intro -->
-            <div id="slide-1" class="absolute inset-0 flex flex-col items-center justify-center px-4 text-center transition-all duration-500 opacity-0 transform translate-y-4">
-                <p class="text-xs md:text-sm font-semibold tracking-[0.3em] text-blue-400 uppercase mb-3">Welcome to my space</p>
-                <h1 class="text-5xl md:text-8xl font-black tracking-tight mb-6">
-                    EASH SULTAN
-                </h1>
-                <p class="max-w-lg text-slate-400 text-sm md:text-base leading-relaxed">
-                    A portfolio crafted around interactive details, motion, and visual storytelling.
-                </p>
-                <div class="mt-12 flex flex-col items-center">
-                    <span class="text-xs tracking-widest text-slate-500 animate-pulse">SCROLL TO BEGIN</span>
-                    <div class="w-[1px] h-12 bg-gradient-to-b from-blue-500 to-transparent mt-2 animate-bounce"></div>
-                </div>
-            </div>
-
-            <!-- Slide 2: Developer & Designer -->
-            <div id="slide-2" class="absolute inset-0 flex flex-col items-center justify-center px-4 text-center transition-all duration-500 opacity-0 transform translate-y-4">
-                <p class="text-xs md:text-sm font-semibold tracking-[0.3em] text-indigo-400 uppercase mb-3">Core Expertise</p>
-                <h2 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-6">
-                    CREATIVE DEVELOPER
-                </h2>
-                <p class="max-w-xl text-slate-400 text-sm md:text-base leading-relaxed">
-                    Building robust, lightning-fast digital solutions with beautiful layouts and immersive interactivity.
-                </p>
-            </div>
-
-            <!-- Slide 3: Immersive Web -->
-            <div id="slide-3" class="absolute inset-0 flex flex-col items-center justify-center px-4 text-center transition-all duration-500 opacity-0 transform translate-y-4">
-                <p class="text-xs md:text-sm font-semibold tracking-[0.3em] text-cyan-400 uppercase mb-3">Immersive Motion</p>
-                <h2 class="text-4xl md:text-7xl font-extrabold tracking-tight mb-6">
-                    SCROLL ANIMATION
-                </h2>
-                <p class="max-w-xl text-slate-400 text-sm md:text-base leading-relaxed">
-                    Seamless interaction powered by pre-rendered sequence interpolation. Fluidity at the scale of pixels.
-                </p>
-            </div>
-        </div>
+    <!-- Theme Switcher (Premium Vibe Customizer) -->
+    <div class="theme-switcher-container glass">
+        <span class="switcher-title">Vibe:</span>
+        <button class="theme-btn theme-cyan-btn active" data-theme="theme-cyan"></button>
+        <button class="theme-btn theme-purple-btn" data-theme="theme-purple"></button>
+        <button class="theme-btn theme-orange-btn" data-theme="theme-orange"></button>
+        <button class="theme-btn theme-green-btn" data-theme="theme-green"></button>
+        <button class="theme-btn theme-rose-btn" data-theme="theme-rose"></button>
+        <button class="theme-btn theme-blue-btn" data-theme="theme-blue"></button>
     </div>
 
-    <!-- About Section -->
-    <section id="about" class="relative z-10 py-32 px-6 bg-[#0b0f19]">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
-            <div>
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-blue-500">Who I Am</span>
-                <h2 class="text-4xl font-extrabold mt-2 mb-6">Designing digital systems that resonate.</h2>
-                <p class="text-slate-400 mb-6 leading-relaxed">
-                    I am Eash Sultan, a web engineer dedicated to creating high-performance applications with beautiful, intuitive aesthetics. I focus on fine details, typography, and smooth UX.
-                </p>
-                <p class="text-slate-400 mb-8 leading-relaxed">
-                    Whether it's interactive UI components, animation pipelines, or building full-scale client architectures, I build clean, structured code and delightful interfaces.
-                </p>
-                <div class="grid grid-cols-2 gap-6">
-                    <div class="glass p-4 rounded-xl">
-                        <h4 class="text-3xl font-extrabold text-blue-400">3+</h4>
-                        <p class="text-xs tracking-wider text-slate-400 uppercase mt-1">Years Experience</p>
-                    </div>
-                    <div class="glass p-4 rounded-xl">
-                        <h4 class="text-3xl font-extrabold text-indigo-400">40+</h4>
-                        <p class="text-xs tracking-wider text-slate-400 uppercase mt-1">Completed Projects</p>
-                    </div>
-                </div>
-            </div>
-            <div class="relative group">
-                <div class="absolute inset-0 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-3xl blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-500"></div>
-                <div class="relative border border-slate-800 bg-slate-900/60 p-8 rounded-3xl glass">
-                    <h3 class="text-xl font-bold mb-4">My Philosophy</h3>
-                    <ul class="space-y-4 text-sm text-slate-300">
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-3">✔</span>
-                            <span><strong>Performance First:</strong> Lazy loading, layout optimization, and minimal bundle sizes.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-3">✔</span>
-                            <span><strong>Interactivity:</strong> Connecting motion with user intent, ensuring natural feeling feedback loops.</span>
-                        </li>
-                        <li class="flex items-start">
-                            <span class="text-blue-500 mr-3">✔</span>
-                            <span><strong>Clean Architecture:</strong> Modularity, standard conventions, and robust codebases.</span>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <!-- Scroll Progress Bar -->
+    <div class="scroll-progress" id="scroll-progress"></div>
+
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="logo">
+            <span class="gradient-text glow-hover">&lt;EASH SULTAN /&gt;</span>
         </div>
-    </section>
+        <nav class="nav-links">
+            <a href="#hero-container" class="active" id="nav-home">Home</a>
+            <a href="#about" id="nav-about">About</a>
+            <a href="#skills" id="nav-skills">Skills</a>
+            <a href="#sandbox" id="nav-sandbox">Pipeline Demo</a>
+            <a href="#projects" id="nav-projects">Projects</a>
+            <a href="#contact" id="nav-contact">Contact</a>
+        </nav>
+        <div class="header-cta">
+            <a href="#contact" class="btn btn-outline hover-target">Hire Me</a>
+        </div>
+    </header>
 
-    <!-- Projects Section -->
-    <section id="projects" class="py-32 px-6 bg-[#070a13] border-t border-slate-900">
-        <div class="max-w-6xl mx-auto">
-            <div class="flex flex-col md:flex-row md:items-end justify-between mb-16">
-                <div>
-                    <span class="text-xs font-bold uppercase tracking-[0.2em] text-blue-500">Selected Work</span>
-                    <h2 class="text-4xl font-extrabold mt-2">Projects that show design meets code.</h2>
-                </div>
-                <a href="https://github.com/eashsultan" target="_blank" class="text-sm font-semibold text-blue-400 hover:text-blue-300 flex items-center gap-1 mt-4 md:mt-0 transition-colors">
-                    View all projects <span>→</span>
-                </a>
-            </div>
+    <main>
+        <!-- Scroll Motion Hero Section -->
+        <section id="hero-container">
+            <div class="sticky-wrapper">
+                <canvas id="motion-canvas"></canvas>
+                <div class="vignette-overlay"></div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <!-- Project 1 -->
-                <div class="glass rounded-3xl overflow-hidden group border border-slate-800/80 transition-all hover:border-blue-500/30 shadow-lg">
-                    <div class="h-64 bg-gradient-to-br from-slate-900 to-indigo-950/60 relative flex items-center justify-center overflow-hidden">
-                        <div class="absolute inset-0 bg-blue-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <span class="text-slate-500 group-hover:text-blue-400 font-bold text-5xl transition-all duration-300 tracking-wider">01</span>
+                <!-- Slide 1: Eash Sultan Intro -->
+                <div id="slide-1" class="slide-overlay">
+                    <p class="slide-subtitle">Welcome to my space</p>
+                    <h1 class="slide-title gradient-text glow">EASH SULTAN</h1>
+                    <p class="slide-desc">
+                        AI engineer, entrepreneur, and full-stack developer passionate about building technology solutions that solve real-world problems.
+                    </p>
+                    <div class="scroll-indicator">
+                        <span>SCROLL TO DISCOVER</span>
+                        <div class="scroll-line"></div>
                     </div>
-                    <div class="p-8">
-                        <span class="text-xs font-bold uppercase tracking-wider text-blue-400">Web App / Interactive</span>
-                        <h3 class="text-2xl font-bold mt-2 mb-3">Alpha Spark UI</h3>
-                        <p class="text-sm text-slate-400 mb-6">
-                            An immersive dashboard featuring complex real-time charting, analytics pipelines, and dynamic component states.
-                        </p>
-                        <div class="flex flex-wrap gap-2 text-xs font-semibold">
-                            <span class="px-3 py-1 bg-slate-900 border border-slate-800 rounded-full">React</span>
-                            <span class="px-3 py-1 bg-slate-900 border border-slate-800 rounded-full">TailwindCSS</span>
-                            <span class="px-3 py-1 bg-slate-900 border border-slate-800 rounded-full">Framer Motion</span>
+                </div>
+
+                <!-- Slide 2: Tech Explorer -->
+                <div id="slide-2" class="slide-overlay">
+                    <p class="slide-subtitle">Core Capabilities</p>
+                    <h2 class="slide-title gradient-text glow">AI ENGINEER</h2>
+                    <p class="slide-desc">
+                        Designing intelligence interfaces, automated agent workflows, and scalable backend platforms that connect users with future technology.
+                    </p>
+                </div>
+
+                <!-- Slide 3: Interactive Developer -->
+                <div id="slide-3" class="slide-overlay">
+                    <p class="slide-subtitle">Design Meets Dev</p>
+                    <h2 class="slide-title gradient-text glow">FULL-STACK CREATIVE</h2>
+                    <p class="slide-desc">
+                        Bridging fluid frontend animations with structured codebase architectures. Motion combined with clean technology.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- About Section -->
+        <section id="about" class="about-section">
+            <div class="section-header">
+                <span class="subtitle">My Story</span>
+                <h2 class="section-title gradient-title">About Me</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="about-dashboard glass hover-target scroll-reveal">
+                <div class="card-glow"></div>
+                <!-- Interactive Controls (Left Panel) -->
+                <div class="about-tabs-nav">
+                    <div class="profile-mini">
+                        <div class="profile-avatar" style="background-image: url('me_processed.jpg');"></div>
+                        <div class="profile-meta">
+                            <span class="profile-name">Eash Sultan</span>
+                            <span class="profile-role">AI Engineer · Full-Stack Dev</span>
                         </div>
                     </div>
+                    <button class="tab-btn active hover-target" data-tab="mission">
+                        <span class="tab-icon"><i class="fa-solid fa-rocket"></i></span>
+                        <span class="tab-label">
+                            <span class="tab-title">My Mission</span>
+                            <span class="tab-sub">What drives me</span>
+                        </span>
+                    </button>
+                    <button class="tab-btn hover-target" data-tab="alpha-spark">
+                        <span class="tab-icon"><i class="fa-solid fa-lightbulb"></i></span>
+                        <span class="tab-label">
+                            <span class="tab-title">Alpha Spark</span>
+                            <span class="tab-sub">Founder & CEO</span>
+                        </span>
+                    </button>
+                    <button class="tab-btn hover-target" data-tab="vision">
+                        <span class="tab-icon"><i class="fa-solid fa-eye"></i></span>
+                        <span class="tab-label">
+                            <span class="tab-title">Future Vision</span>
+                            <span class="tab-sub">Where I'm headed</span>
+                        </span>
+                    </button>
                 </div>
-
-                <!-- Project 2 -->
-                <div class="glass rounded-3xl overflow-hidden group border border-slate-800/80 transition-all hover:border-indigo-500/30 shadow-lg">
-                    <div class="h-64 bg-gradient-to-br from-slate-900 to-blue-950/60 relative flex items-center justify-center overflow-hidden">
-                        <div class="absolute inset-0 bg-indigo-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                        <span class="text-slate-500 group-hover:text-indigo-400 font-bold text-5xl transition-all duration-300 tracking-wider">02</span>
+                <!-- Interactive Display (Right Panel) -->
+                <div class="about-tabs-content">
+                    <div class="tab-content-glow"></div>
+                    <div class="tab-pane active" id="tab-mission">
+                        <h3>Who I Am &amp; My Mission</h3>
+                        <p class="premium-text">I'm <strong class="text-accent">Eash Sultan (DR. AI)</strong>, a student, AI engineer, entrepreneur, and full-stack software developer passionate about using technology to solve real-world problems across Africa.</p>
+                        <p class="premium-text">I believe technology is more than writing code—it's a tool for creating opportunities, improving lives, and building sustainable solutions. My work combines AI, software engineering, and entrepreneurship to create products that make a meaningful impact.</p>
+                        <div class="fact-strip">
+                            <div class="fact-pill"><i class="fa-solid fa-laptop-code"></i><span>AI + Full-Stack</span></div>
+                            <div class="fact-pill"><i class="fa-solid fa-user-graduate"></i><span>Student Builder</span></div>
+                            <div class="fact-pill"><i class="fa-solid fa-location-dot"></i><span>Africa-focused</span></div>
+                        </div>
                     </div>
-                    <div class="p-8">
-                        <span class="text-xs font-bold uppercase tracking-wider text-indigo-400">Full-Stack Solution</span>
-                        <h3 class="text-2xl font-bold mt-2 mb-3">Nexus Workspace</h3>
-                        <p class="text-sm text-slate-400 mb-6">
-                            A collaborative platform built to connect distributed teams with tasks, real-time messaging, and storage integration.
-                        </p>
-                        <div class="flex flex-wrap gap-2 text-xs font-semibold">
-                            <span class="px-3 py-1 bg-slate-900 border border-slate-800 rounded-full">Next.js</span>
-                            <span class="px-3 py-1 bg-slate-900 border border-slate-800 rounded-full">NodeJS</span>
-                            <span class="px-3 py-1 bg-slate-900 border border-slate-800 rounded-full">PostgreSQL</span>
+                    <div class="tab-pane" id="tab-alpha-spark">
+                        <h3>Alpha Spark &amp; Leadership</h3>
+                        <p class="premium-text">As the Founder and CEO of <strong class="text-accent">Alpha Spark</strong>, I am building an innovation-driven company focused on empowering the next generation of African digital talent through AI education, software development, and technology solutions.</p>
+                        <p class="premium-text">Beyond building products, I enjoy mentoring aspiring developers, organizing technology initiatives, and sharing my learning journey publicly to inspire others because growth happens through consistency.</p>
+                        <div class="fact-strip">
+                            <div class="fact-pill"><i class="fa-solid fa-signature"></i><span>Founder & CEO</span></div>
+                            <div class="fact-pill"><i class="fa-solid fa-chalkboard-user"></i><span>Mentor</span></div>
+                            <div class="fact-pill"><i class="fa-solid fa-people-group"></i><span>Community Builder</span></div>
+                        </div>
+                    </div>
+                    <div class="tab-pane" id="tab-vision">
+                        <h3>Future Vision</h3>
+                        <p class="premium-text">Currently, I am pursuing my university education while completing professional internships and building technology startups to position Africa as a leader in innovation.</p>
+                        <p class="premium-text">My long-term vision is to build globally recognized technology companies that position Africa as a leader in innovation while creating opportunities for thousands of young people through education, entrepreneurship, and digital transformation.</p>
+                        <div class="fact-strip">
+                            <div class="fact-pill"><i class="fa-solid fa-graduation-cap"></i><span>Computer Science</span></div>
+                            <div class="fact-pill"><i class="fa-solid fa-briefcase"></i><span>Internships</span></div>
+                            <div class="fact-pill"><i class="fa-solid fa-earth-africa"></i><span>Africa First</span></div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+            <!-- Philosophy Quote Card -->
+            <div class="about-card about-quote glass hover-target scroll-reveal">
+                <div class="card-glow"></div>
+                <i class="fa-solid fa-quote-left quote-mark"></i>
+                <blockquote>"Technology should not only solve problems—it should create opportunities, empower people, and leave communities better than we found them."</blockquote>
+                <span class="quote-author">— Eash Sultan</span>
+            </div>
+        </section>
 
-    <!-- Skills Section -->
-    <section id="skills" class="py-32 px-6 bg-[#0b0f19] border-t border-slate-900">
-        <div class="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-16">
-            <div>
-                <span class="text-xs font-bold uppercase tracking-[0.2em] text-blue-500">Tech Stack</span>
-                <h2 class="text-4xl font-extrabold mt-2 mb-6">Tools that power my creations.</h2>
-                <p class="text-slate-400 leading-relaxed mb-6">
-                    I believe in using the right tool for the job. Over the years, I've curated a modern development toolkit that enables rapid, secure, and beautiful websites.
-                </p>
-                <div class="flex flex-wrap gap-3">
-                    <span class="px-4 py-2 bg-slate-900 border border-slate-800/80 rounded-xl text-sm font-semibold">HTML5/CSS3</span>
-                    <span class="px-4 py-2 bg-slate-900 border border-slate-800/80 rounded-xl text-sm font-semibold">JavaScript (ES6+)</span>
-                    <span class="px-4 py-2 bg-slate-900 border border-slate-800/80 rounded-xl text-sm font-semibold">React & Next.js</span>
-                    <span class="px-4 py-2 bg-slate-900 border border-slate-800/80 rounded-xl text-sm font-semibold">Tailwind CSS</span>
-                    <span class="px-4 py-2 bg-slate-900 border border-slate-800/80 rounded-xl text-sm font-semibold">Vite</span>
-                    <span class="px-4 py-2 bg-slate-900 border border-slate-800/80 rounded-xl text-sm font-semibold">Git & GitHub</span>
-                    <span class="px-4 py-2 bg-slate-900 border border-slate-800/80 rounded-xl text-sm font-semibold">Node.js</span>
-                    <span class="px-4 py-2 bg-slate-900 border border-slate-800/80 rounded-xl text-sm font-semibold">Canvas API</span>
+        <!-- Skills Section -->
+        <section id="skills" class="skills-section">
+            <div class="section-header">
+                <span class="subtitle">Capabilities</span>
+                <h2 class="section-title gradient-title">Areas of Expertise</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="skills-grid">
+                <div class="skill-category glass hover-target scroll-reveal">
+                    <div class="card-glow"></div>
+                    <div class="skill-banner">
+                        <img src="skill-ai.jpg" alt="AI & Machine Learning" loading="lazy" onerror="this.style.display='none'">
+                        <div class="skill-banner-overlay"></div>
+                        <span class="skill-banner-tag"><i class="fa-solid fa-wand-magic-sparkles"></i> Neural · NLP · Automation</span>
+                    </div>
+                    <div class="category-header">
+                        <span class="category-icon-wrap"><i class="fa-solid fa-brain category-icon"></i></span>
+                        <div class="category-title-wrap">
+                            <span class="category-eyebrow">Intelligence</span>
+                            <h3>AI & Machine Learning</h3>
+                        </div>
+                        <span class="category-count">05 Skills</span>
+                    </div>
+                    <div class="skills-wrap">
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-robot skill-dot"></i>Artificial Intelligence</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 90%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-brain skill-dot"></i>Machine Learning Models</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 85%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-wand-magic-sparkles skill-dot"></i>AI Automation Solutions</span>
+                                <span class="skill-percent">92%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 92%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-bolt skill-dot"></i>Productivity Automations</span>
+                                <span class="skill-percent">88%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 88%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-chalkboard-user skill-dot"></i>Technical Mentorship</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 80%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category glass hover-target scroll-reveal">
+                    <div class="card-glow"></div>
+                    <div class="skill-banner">
+                        <img src="skill-code.jpg" alt="Full-Stack Engineering" loading="lazy" onerror="this.style.display='none'">
+                        <div class="skill-banner-overlay"></div>
+                        <span class="skill-banner-tag"><i class="fa-solid fa-layer-group"></i> Frontend · Backend · Cloud</span>
+                    </div>
+                    <div class="category-header">
+                        <span class="category-icon-wrap"><i class="fa-solid fa-code category-icon"></i></span>
+                        <div class="category-title-wrap">
+                            <span class="category-eyebrow">Engineering</span>
+                            <h3>Full-Stack Engineering</h3>
+                        </div>
+                        <span class="category-count">05 Skills</span>
+                    </div>
+                    <div class="skills-wrap">
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-layer-group skill-dot"></i>Full-Stack Web Dev</span>
+                                <span class="skill-percent">93%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 93%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-plug skill-dot"></i>API & Backend Engineering</span>
+                                <span class="skill-percent">88%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 88%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-database skill-dot"></i>Database Design & Mgmt</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 90%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-cloud skill-dot"></i>Cloud Deployment</span>
+                                <span class="skill-percent">82%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 82%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-sitemap skill-dot"></i>Software Architecture</span>
+                                <span class="skill-percent">85%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 85%;"></div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="skill-category glass hover-target scroll-reveal">
+                    <div class="card-glow"></div>
+                    <div class="skill-banner">
+                        <img src="skill-product.jpg" alt="Product & Strategy" loading="lazy" onerror="this.style.display='none'">
+                        <div class="skill-banner-overlay"></div>
+                        <span class="skill-banner-tag"><i class="fa-solid fa-chess"></i> Product · UX · Growth</span>
+                    </div>
+                    <div class="category-header">
+                        <span class="category-icon-wrap"><i class="fa-solid fa-lightbulb category-icon"></i></span>
+                        <div class="category-title-wrap">
+                            <span class="category-eyebrow">Strategy</span>
+                            <h3>Product & Strategy</h3>
+                        </div>
+                        <span class="category-count">05 Skills</span>
+                    </div>
+                    <div class="skills-wrap">
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-box-open skill-dot"></i>Product Development</span>
+                                <span class="skill-percent">86%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 86%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-pen-ruler skill-dot"></i>UI/UX Implementation</span>
+                                <span class="skill-percent">90%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 90%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-rocket skill-dot"></i>Startup Development</span>
+                                <span class="skill-percent">88%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 88%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-chess skill-dot"></i>Technology Strategy</span>
+                                <span class="skill-percent">84%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 84%;"></div></div>
+                        </div>
+                        <div class="skill-bar-row">
+                            <div class="skill-row-head">
+                                <span class="skill-name"><i class="fa-solid fa-users-gear skill-dot"></i>Training & Leadership</span>
+                                <span class="skill-percent">80%</span>
+                            </div>
+                            <div class="skill-track"><div class="skill-fill" style="--fill: 80%;"></div></div>
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div class="space-y-6">
-                <div>
-                    <div class="flex justify-between text-sm font-semibold text-slate-300 mb-2">
-                        <span>Frontend Engineering</span>
-                        <span>95%</span>
-                    </div>
-                    <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
-                        <div class="w-[95%] h-full bg-blue-500"></div>
-                    </div>
+        </section>
+
+        <!-- Interactive Sandbox (Pipeline Demo) -->
+        <section id="sandbox" class="sandbox-section">
+            <div class="section-header">
+                <span class="subtitle">Interactive Sandbox</span>
+                <h2 class="section-title gradient-title">AI App Alchemist</h2>
+                <p style="color: var(--text-secondary); margin-top: 0.5rem;">Type any app idea and watch the AI imagine, build, and ship a full-stack product — live.</p>
+                <div class="title-underline"></div>
+            </div>
+            <div class="sandbox-container glass scroll-reveal">
+                <div class="sandbox-input-area">
+                    <h4>Your App Idea</h4>
+                    <textarea id="app-idea-input" rows="4" placeholder="Describe any app you want built... e.g. &quot;a church donation tracker with WhatsApp alerts&quot;"></textarea>
+                    <button id="run-pipeline-btn" class="btn btn-primary btn-block hover-target">Summon AI Magic <i class="fa-solid fa-wand-magic-sparkles"></i></button>
                 </div>
-                <div>
-                    <div class="flex justify-between text-sm font-semibold text-slate-300 mb-2">
-                        <span>Creative & Scroll Animations</span>
-                        <span>90%</span>
+                <div class="sandbox-terminal-area">
+                    <div class="terminal-header">
+                        <span class="terminal-dot dot-red"></span>
+                        <span class="terminal-dot dot-yellow"></span>
+                        <span class="terminal-dot dot-green"></span>
+                        <span class="terminal-title">bash - alpha_alchemist.py</span>
                     </div>
-                    <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
-                        <div class="w-[90%] h-full bg-indigo-500"></div>
-                    </div>
-                </div>
-                <div>
-                    <div class="flex justify-between text-sm font-semibold text-slate-300 mb-2">
-                        <span>UI/UX Interface Design</span>
-                        <span>85%</span>
-                    </div>
-                    <div class="w-full h-2 bg-slate-900 rounded-full overflow-hidden">
-                        <div class="w-[85%] h-full bg-cyan-500"></div>
+                    <div class="terminal-body" id="pipeline-terminal">
+                        <span class="terminal-prompt">$</span> awaiting your idea... type one above and hit the button. ✨
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Contact Section -->
-    <section id="contact" class="py-32 px-6 bg-[#070a13] border-t border-slate-900">
-        <div class="max-w-4xl mx-auto text-center">
-            <span class="text-xs font-bold uppercase tracking-[0.2em] text-blue-500">Get In Touch</span>
-            <h2 class="text-4xl md:text-5xl font-extrabold mt-2 mb-6">Let's build something epic together.</h2>
-            <p class="text-slate-400 mb-12 max-w-lg mx-auto">
-                Have a project in mind, a role to fill, or just want to chat? Drop a message.
-            </p>
+        <!-- Projects Section -->
+        <section id="projects" class="projects-section">
+            <div class="section-header">
+                <span class="subtitle">Portfolio Showcase</span>
+                <h2 class="section-title">Featured Works</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="projects-grid">
+                <div class="project-card glass hover-target tilt scroll-reveal">
+                    <div class="card-glow"></div>
+                    <div class="project-img-container">
+                        <img src="Screenshot%20From%202026-08-06%2015-42-32.png" alt="Gombe State Hospital Services Management Board Web Portal" class="project-image">
+                    </div>
+                    <div class="project-info">
+                        <h3>GSHSMB Portal</h3>
+                        <p>The official web portal and administration platform for the governance and management of public secondary healthcare facilities across Gombe State, overseeing 30+ hospitals and 2,500+ healthcare staff.</p>
+                        <div class="project-tags" style="margin-bottom: 1.5rem;">
+                            <span>Healthcare Governance</span>
+                            <span>Web Portal</span>
+                            <span>HMIS Integration</span>
+                        </div>
+                        <a href="https://gshsmb.org" target="_blank" class="project-link-btn" style="display: inline-flex; align-items: center; color: var(--accent-color); text-decoration: none; font-weight: 500; gap: 0.5rem; font-size: 0.9rem; transition: var(--transition);">
+                            <span>Visit gshsmb.org</span>
+                            <i class="fa-solid fa-arrow-up-right-from-square" style="font-size: 0.8rem;"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="project-card glass hover-target tilt scroll-reveal">
+                    <div class="card-glow"></div>
+                    <div class="project-img-placeholder">
+                        <i class="fa-solid fa-hospital"></i>
+                    </div>
+                    <div class="project-info">
+                        <h3>Hospital Management Platform</h3>
+                        <p>A modern dashboard providing insights into hospital stats, staff capacity, and departmental records, utilizing Firebase as a real-time reactive storage layer.</p>
+                        <div class="project-tags">
+                            <span>React</span>
+                            <span>Firebase Firestore</span>
+                            <span>TypeScript</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-            <form class="glass p-8 md:p-12 rounded-3xl border border-slate-800 text-left space-y-6 max-w-2xl mx-auto shadow-2xl">
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Name</label>
-                    <input type="text" placeholder="Your Name" class="w-full bg-[#0b0f19] border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 text-slate-100 transition-colors">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Email Address</label>
-                    <input type="email" placeholder="you@example.com" class="w-full bg-[#0b0f19] border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 text-slate-100 transition-colors">
-                </div>
-                <div>
-                    <label class="block text-xs font-semibold uppercase tracking-wider text-slate-400 mb-2">Message</label>
-                    <textarea rows="4" placeholder="Tell me about your project..." class="w-full bg-[#0b0f19] border border-slate-800 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-blue-500 text-slate-100 transition-colors"></textarea>
-                </div>
-                <button type="submit" class="w-full py-4 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-sm font-semibold uppercase tracking-wider transition-colors shadow-lg shadow-blue-900/30">
-                    Send Message
-                </button>
-            </form>
-        </div>
-    </section>
+        <!-- Contact Section -->
+        <section id="contact" class="contact-section">
+            <div class="section-header">
+                <span class="subtitle">Reach Out</span>
+                <h2 class="section-title">Launch A Collaboration</h2>
+                <div class="title-underline"></div>
+            </div>
+            <div class="contact-container glass scroll-reveal">
+                <form id="contact-form">
+                    <div class="form-group">
+                        <label for="name">Name</label>
+                        <input type="text" id="name" required placeholder="Your Name">
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email</label>
+                        <input type="email" id="email" required placeholder="your.email@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label for="message">Message</label>
+                        <textarea id="message" required placeholder="Tell me about your project requirements..."></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block hover-target">Send Transmission <i class="fa-solid fa-paper-plane"></i></button>
+                </form>
+            </div>
+        </section>
+    </main>
 
     <!-- Footer -->
-    <footer class="py-12 border-t border-slate-900 bg-[#070a13] px-6 text-center text-xs text-slate-500">
-        <p>© 2026 Eash Sultan. All rights reserved.</p>
+    <footer class="footer">
+        <p>&copy; 2026 Eash Sultan. Designed and coded with ultimate premium micro-interactions.</p>
     </footer>
 
-    <!-- Script file -->
+    <!-- Custom Script -->
     <script src="script.js"></script>
 </body>
 </html>
