@@ -56,7 +56,7 @@ function initParticles() {
     const colors = ['#00f2fe', '#4facfe', '#ffffff', '#a855f7', '#38ef7d'];
 
     // Track mouse for interaction
-    let mouse = { x: null, y: null, radius: 180 };
+    let mouse = { x: null, y: null, radius: 250 };
 
     window.addEventListener('mousemove', function(event) {
         mouse.x = event.clientX;
@@ -83,8 +83,8 @@ function initParticles() {
             this.size = Math.random() * 4 + 1.2;
             this.baseX = this.x;
             this.baseY = this.y;
-            this.speedX = Math.random() * 1.5 - 0.75;
-            this.speedY = Math.random() * 1.5 - 0.75;
+            this.speedX = Math.random() * 3 - 1.5;
+            this.speedY = Math.random() * 3 - 1.5;
             this.color = colors[Math.floor(Math.random() * colors.length)];
             this.opacity = Math.random() * 0.5 + 0.2;
         }
@@ -131,8 +131,8 @@ function initParticles() {
 
     function setup() {
         particles = [];
-        // Increased particle density
-        const numberOfParticles = Math.min((canvas.width * canvas.height) / 4500, 220);
+        // Increased particle density for maximum interaction
+        const numberOfParticles = Math.min((canvas.width * canvas.height) / 2000, 450);
         for (let i = 0; i < numberOfParticles; i++) {
             particles.push(new Particle());
         }
@@ -323,7 +323,7 @@ function initThemeSwitcher() {
         cycleInterval = setInterval(() => {
             const nextIndex = (activeIndex + 1) % themes.length;
             applyTheme(nextIndex);
-        }, 4000);
+        }, 1500);
     }
 
     buttons.forEach((btn, index) => {
