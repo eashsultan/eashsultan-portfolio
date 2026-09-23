@@ -1758,26 +1758,21 @@ section {
     }
     
     .hero-visual {
-        height: 180px;
-        order: -1;
-        margin-bottom: 0;
+        height: 220px;
+        margin-top: 1.5rem;
     }
     
     .floating-sphere {
-        width: 130px;
-        height: 130px;
+        width: 140px;
+        height: 140px;
     }
     
-    .ring-1 { width: 180px; height: 180px; }
-    .ring-2 { width: 230px; height: 230px; }
+    .ring-1 { width: 190px; height: 190px; }
+    .ring-2 { width: 240px; height: 240px; }
 
     .hero-title {
-        font-size: clamp(1.6rem, 6vw, 2.2rem);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-wrap: nowrap;
-        white-space: nowrap;
+        font-size: clamp(1.8rem, 6vw, 2.2rem);
+        line-height: 1.2;
     }
     
     .hero-subtitle {
