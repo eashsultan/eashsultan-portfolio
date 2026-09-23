@@ -1750,6 +1750,13 @@ section {
         gap: 1rem;
     }
     
+    .hero-content {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 0 auto;
+    }
+    
     .hero-visual {
         height: 180px;
         order: -1;
