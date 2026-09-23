@@ -323,7 +323,7 @@ function initThemeSwitcher() {
         cycleInterval = setInterval(() => {
             const nextIndex = (activeIndex + 1) % themes.length;
             applyTheme(nextIndex);
-        }, 8000);
+        }, 4000);
     }
 
     buttons.forEach((btn, index) => {
