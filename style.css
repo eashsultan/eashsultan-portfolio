@@ -1829,31 +1829,33 @@ section {
 .hero-socials {
     margin: 2.5rem auto 0;
     display: inline-flex;
-    gap: 0.5rem;
-    padding: 0.6rem 1rem;
+    gap: 0.4rem;
+    padding: 0.5rem 0.8rem;
     border-radius: 50px;
     background: rgba(255, 255, 255, 0.02);
     border: 1px solid rgba(255, 255, 255, 0.05);
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     box-shadow: inset 0 0 20px rgba(0, 255, 255, 0.02), 0 10px 30px rgba(0, 0, 0, 0.2);
-    flex-wrap: wrap;
+    flex-wrap: nowrap;
     justify-content: center;
     max-width: 100%;
+    overflow-x: auto;
 }
 
 .social-icon {
     color: var(--text-secondary);
-    font-size: 1.3rem;
+    font-size: 1.2rem;
     transition: var(--transition);
     display: flex;
     align-items: center;
     justify-content: center;
-    width: 42px;
-    height: 42px;
+    width: 38px;
+    height: 38px;
     border-radius: 50%;
     background: transparent;
     border: 1px solid transparent;
+    flex-shrink: 0;
 }
 
 .social-icon:hover {
